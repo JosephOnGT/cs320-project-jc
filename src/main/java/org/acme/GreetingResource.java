@@ -1,5 +1,6 @@
 package org.acme;
 
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
@@ -19,11 +20,14 @@ public class GreetingResource {
         return "Hello " + name;
     }
 
+    @Path("/personalized/{name}")
     @POST
-    @Path("/personalized")
     @Produces(MediaType.TEXT_PLAIN)
-    public String helloPersonalizedPost(Person p) {
-        return "Hello " + p.getFirstName() + " " + p.getLastName();
+    @Transactional
+    public String helloPersonalizedPost(@PathParam("name") String name) {
+        UserName userName = new UserName(name);
+        userName.persist();
+        return "Hello " + name + "! Your name has been stored in the database.";
     }
 
     public static class Person {
