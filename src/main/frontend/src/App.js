@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
 import './App.css';  // Import the CSS file for styling
+import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 function App() {
     const [message, setMessage] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+
+    // Initialize useNavigate hook
+    const navigate = useNavigate();
 
     const fetchMessage = async () => {
         const response = await fetch('http://localhost:8080/hello/personalized', {
@@ -16,6 +20,11 @@ function App() {
         });
         const text = await response.text();
         setMessage(text);
+    };
+
+    // Function to navigate to page2
+    const navigateToPage2 = () => {
+        navigate('/page2');
     };
 
     return (
@@ -31,6 +40,9 @@ function App() {
             </div>
             <button onClick={fetchMessage}>Submit</button>
             <p>{message}</p>
+
+            {/* Button to navigate to Page 2 */}
+            <button onClick={navigateToPage2}>Go to Page 2</button>
         </div>
     );
 }
