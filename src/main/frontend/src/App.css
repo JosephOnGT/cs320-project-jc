@@ -5,6 +5,14 @@
     margin: 0 auto;
     padding-top: 50px;
     font-family: Arial, sans-serif;
+
+    /* Add background image */
+    background-image: url('/Users/josephcedeno/Documents/GitHub/cs320-project-jc/src/main/frontend/public/background.jpg');
+    background-size: cover;   /* Ensure the image covers the entire container */
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;        /* Ensure the background covers the full screen */
+    color: white;             /* Set text color to white for better readability */
 }
 
 /* Style the page header */
@@ -12,6 +20,7 @@ h1 {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
+    color: black;
 }
 
 /* Form group style */
@@ -28,6 +37,7 @@ input[type="text"] {
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
+    color: black;  /* Ensure input text remains visible */
 }
 
 /* Style the submit button */
@@ -41,6 +51,10 @@ button {
     cursor: pointer;
 }
 
+label {
+    color: darkred;
+}
+
 /* Change button style on hover */
 button:hover {
     background-color: #45a049;
@@ -51,4 +65,174 @@ p {
     font-size: 18px;
     color: #333;
     margin-top: 20px;
+}
+
+/* Card container styling */
+.card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styles */
+h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+/* List of groups */
+.group-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.group-list li {
+    background-color: #eee;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+/* Button styling */
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Wishlist specific styling */
+.wishlist {
+    margin-top: 20px;
+}
+
+.wishlist ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.wishlist-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wishlist-item button.remove-btn {
+    background-color: #FF4500;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.wishlist-item button.remove-btn:hover {
+    background-color: #FF6347;
+}
+
+/* Style the add item input and button */
+.form-group input[type="text"] {
+    width: 70%;
+    padding: 8px;
+    margin-right: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-group button {
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form-group button:hover {
+    background-color: #45a049;
+}
+
+/* Center the content in the container */
+.container {
+    text-align: center;
+    padding-top: 50px;
+    font-family: Arial, sans-serif;
+}
+
+/* Card container to hold the two options */
+.card-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between the two cards */
+    margin-top: 30px;
+}
+
+/* Styling for individual cards */
+.card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+/* Card hover effect */
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling for card headers */
+.card h2 {
+    margin-bottom: 15px;
+    color: black;
+}
+
+/* Button styling within cards */
+.card button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Button hover effect */
+.card button:hover {
+    background-color: #45a049;
+}
+
+/* Icon styling */
+.card-icon {
+    color: #4CAF50;
+    margin-bottom: 15px;
+}
+
+/* Style for the wishlist image */
+.wishlist-image {
+    max-width: 100%; /* Make the image responsive */
+    height: auto;
+    margin-bottom: 20px; /* Add some space between the image and the content */
+    border-radius: 10px;
 }

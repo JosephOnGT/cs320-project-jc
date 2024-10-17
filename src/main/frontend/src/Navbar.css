@@ -1,0 +1,32 @@
+/* Navbar.css */
+.navbar {
+    background-color: #4CAF50; /* Holiday green */
+    padding: 15px;
+    text-align: center;
+    position: fixed; /* Fix the navbar to the top */
+    top: 0;
+    width: 100%; /* Full width */
+    z-index: 1000; /* Ensure it stays above other content */
+}
+
+.navbar-links {
+    display: inline-block;
+}
+
+.nav-link {
+    color: #FFD700; /* Festive gold */
+    text-decoration: none;
+    font-family: 'Cursive', sans-serif; /* Fun holiday font */
+    font-size: 1.2em;
+    margin: 0 15px;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #FF4500; /* Bright red for hover effect */
+}
+
+/* Make sure content below navbar is not hidden */
+.container {
+    padding-top: 70px; /* Adjust this to the height of the navbar */
+}

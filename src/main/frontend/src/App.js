@@ -1,6 +1,6 @@
-import './App.css';  // Import the CSS file for styling
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import './App.css';  // Import the CSS file for styling
 
 function App() {
     const [message, setMessage] = useState('');
@@ -22,14 +22,14 @@ function App() {
         setMessage(text);
     };
 
-    // Function to navigate to page2
-    const navigateToPage2 = () => {
-        navigate('/page2');
-    };
+    // // Function to navigate to page2
+    // const navigateToPage2 = () => {
+    //     navigate('/page2');
+    // };
 
     return (
         <div className="container">
-            <h1>Personalized Greeting</h1>
+            <h1>Secret Santa App</h1>
             <div className="form-group">
                 <label>First Name:</label>
                 <input type="text" onChange={(e) => setFirstName(e.target.value)} />
@@ -41,8 +41,8 @@ function App() {
             <button onClick={fetchMessage}>Submit</button>
             <p>{message}</p>
 
-            {/* Button to navigate to Page 2 */}
-            <button onClick={navigateToPage2}>Go to Page 2</button>
+            {/*/!* Button to navigate to Page 2 *!/*/}
+            {/*<button onClick={navigateToPage2}>Go to Page 2</button>*/}
         </div>
     );
 }
