@@ -236,3 +236,10 @@ button:hover {
     margin-bottom: 20px; /* Add some space between the image and the content */
     border-radius: 10px;
 }
+
+/* Style for error messages */
+.error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}

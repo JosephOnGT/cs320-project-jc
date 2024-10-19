@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';  // Assuming consistent styling is applied here
 
 function Page2() {
+
     return (
         <div className="container">
             <h1>Group Management</h1>
