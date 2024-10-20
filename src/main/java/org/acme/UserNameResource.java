@@ -40,6 +40,8 @@ public class UserNameResource {
         }
 
         existingUser.name = updatedUser.name;
+        existingUser.lastName = updatedUser.lastName; // Don't forget to update last name
+        existingUser.persist();  // Persist the changes
         return Response.ok(existingUser).build();
     }
 

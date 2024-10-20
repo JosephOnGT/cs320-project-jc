@@ -20,14 +20,16 @@ public class GreetingResource {
         return "Hello " + name;
     }
 
-    @Path("/personalized/{name}")
     @POST
+    @Path("/personalized")
     @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON) // Accept JSON input
     @Transactional
-    public String helloPersonalizedPost(@PathParam("name") String name) {
-        UserName userName = new UserName(name);
+    public String helloPersonalizedPost(Person person) {
+        // Create UserName object with both first and last names
+        UserName userName = new UserName(person.getFirstName(), person.getLastName());
         userName.persist();
-        return "Hello " + name + "! Your name has been stored in the database.";
+        return "Hello " + person.getFirstName() + " " + person.getLastName() + "! Your name has been stored in the database.";
     }
 
     public static class Person {
@@ -50,5 +52,4 @@ public class GreetingResource {
             this.lastName = lastName;
         }
     }
-
 }

@@ -21,10 +21,16 @@ public class SubmitNameResource {
             return Response.status(Response.Status.BAD_REQUEST).entity("Please enter only one name. Make sure your name does not contain spaces.").build();
         }
 
-        // Create name in database
-        user.persist();
+        try {
+            // Create name in database
+            user.persist();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error storing the name: " + e.getMessage()).build();
+        }
 
         // Return response
-        return Response.ok("Hello, " + user.name + "! Your name has been stored in the database.") .build();
+        return Response.ok("Hello, " + user.name + "! Your name has been stored in the database.").build();
     }
+
+
 }

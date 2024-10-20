@@ -5,6 +5,7 @@ import './App.css';  // Import the CSS file for styling
 function App() {
     const [message, setMessage] = useState('');
     const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');  // State for last name
     const [error, setError] = useState('');  // Error state for handling validation errors
 
     // Frontend validation function
@@ -13,9 +14,17 @@ function App() {
             return "First Name cannot be empty.";
         }
 
+        if (!lastName) {
+            return "Last Name cannot be empty."; // Validate last name
+        }
+
         const regex = /^[A-Za-z]+$/;  // Regex to check for letters only
         if (!regex.test(firstName)) {
             return "First Name cannot contain numbers or special characters.";
+        }
+
+        if (!regex.test(lastName)) {
+            return "Last Name cannot contain numbers or special characters."; // Validate last name
         }
 
         return null;  // No validation errors
@@ -31,12 +40,12 @@ function App() {
         }
 
         try {
-            const response = await fetch('http://localhost:8080/submit-name', {
+            const response = await fetch('http://localhost:8080/hello/personalized', {  // Update the URL if needed
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name: firstName }),  // Sending the firstName as "name"
+                body: JSON.stringify({ firstName, lastName }),  // Sending both firstName and lastName
             });
 
             if (!response.ok) {
@@ -66,6 +75,15 @@ function App() {
                     type="text"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
+                />
+            </div>
+
+            <div className="form-group">
+                <label>Last Name:</label>
+                <input
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
                 />
             </div>
 

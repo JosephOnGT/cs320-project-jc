@@ -243,3 +243,102 @@ button:hover {
     font-size: 0.9em;
     margin-top: 5px;
 }
+
+/* Styling for the user list container */
+.user-list-container {
+    margin-top: 20px; /* Space above the user list */
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background for contrast */
+    border-radius: 8px;
+    padding: 15px; /* Padding around the list */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+}
+
+/* Styling for the user list */
+.user-list {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+
+/* Styling for individual user list items */
+.user-list li {
+    background-color: #f1f1f1; /* Light grey background for list items */
+    margin: 5px 0; /* Space between list items */
+    padding: 10px; /* Padding inside each list item */
+    border-radius: 4px; /* Rounded corners */
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-between; /* Space between elements */
+    align-items: center; /* Center items vertically */
+}
+
+/* Styling for the user names */
+.user-list li span {
+    color: #333; /* Darker text for better readability */
+}
+
+/* Optional: Styling for a button inside list items (if needed in future) */
+.user-list li button {
+    background-color: #4CAF50; /* Button color */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    padding: 5px 10px; /* Padding */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+.user-list li button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Wishlist specific styling */
+.wishlist {
+    margin-top: 20px;
+}
+
+/* Styling for wishlist items */
+.wishlist ul {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0;
+}
+
+.wishlist-item {
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white */
+    border: 1px solid #ddd; /* Border for better visibility */
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px; /* Space inside each item */
+    margin-bottom: 10px; /* Space between items */
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-between; /* Space between item and remove button */
+    align-items: center; /* Center align items vertically */
+    color: black
+}
+
+/* Styling for remove button in wishlist */
+.wishlist-item button.remove-btn {
+    background-color: #FF4500; /* Bright red color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+/* Hover effect for remove button */
+.wishlist-item button.remove-btn:hover {
+    background-color: #FF6347; /* Lighter red on hover */
+}
+
+/* Style for error messages */
+.error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+/* Style for success messages */
+.success {
+    color: green;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
