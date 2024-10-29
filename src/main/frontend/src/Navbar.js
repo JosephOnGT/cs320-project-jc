@@ -11,6 +11,8 @@ const Navbar = () => {
                 <Link to="/page2" className="nav-link">Groups</Link>
                 <span> </span>
                 <Link to="/page3" className="nav-link">Wishlist</Link>
+                <span> </span>
+                <Link to="/page4" className="nav-link">Group Management</Link>
             </div>
         </nav>
     );

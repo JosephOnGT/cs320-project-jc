@@ -1,75 +1,115 @@
-import React, { useState } from 'react';
-import './App.css';  // Assuming consistent styling is applied here
+import React, { useState, useEffect } from 'react';
+import './App.css';
 
-function Page2() {
-    const [users, setUsers] = useState([]);  // State to hold the user data
-    const [error, setError] = useState('');  // State to handle any errors
-    const [showUsers, setShowUsers] = useState(false);  // State to toggle user display
+function CreateGroupForm() {
+    const [groupName, setGroupName] = useState('');
+    const [budget, setBudget] = useState('');
+    const [selectedUser, setSelectedUser] = useState('');  // Single selected user
+    const [groupUsers, setGroupUsers] = useState([]);  // List of users in the group
+    const [users, setUsers] = useState([]);
+    const [error, setError] = useState('');
 
-    // Function to fetch users from the backend
-    const fetchUsers = async () => {
-        try {
-            const response = await fetch('http://localhost:8080/users');
-            if (!response.ok) {
-                throw new Error('Failed to fetch users');
+    // Fetch users for the dropdown
+    useEffect(() => {
+        async function fetchUsers() {
+            try {
+                const response = await fetch('http://localhost:8080/users');
+                const data = await response.json();
+                setUsers(data);
+            } catch (error) {
+                console.error('Error fetching users:', error);
             }
-            const data = await response.json();
-            setUsers(data);  // Set the fetched user data
-            setError('');  // Clear any previous errors
-            setShowUsers(true);  // Set state to show users
-        } catch (error) {
-            console.error('Error fetching users:', error);
-            setError('Error fetching users. Please try again later.');
-            setShowUsers(false);  // Hide users if there’s an error
+        }
+        fetchUsers();
+    }, []);
+
+    const handleAddUser = () => {
+        // Check if the user is already in the group
+        if (groupUsers.includes(selectedUser) || selectedUser === '') return;
+
+        setGroupUsers([...groupUsers, selectedUser]);
+        setSelectedUser('');  // Reset the selected user
+    };
+
+    const handleCreateGroup = async () => {
+        if (groupUsers.length < 2 || groupUsers.length % 2 !== 0) {
+            setError("Group must have an even number of users and at least two members.");
+            return;
+        }
+        setError('');
+
+        const response = await fetch('http://localhost:8080/groups', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ groupName, budget, userIds: groupUsers }),
+        });
+
+        if (response.ok) {
+            alert("Group created successfully!");
+            // Optionally reset the form after successful creation
+            handleRefresh();
+        } else {
+            const errorMessage = await response.text();
+            setError(errorMessage);
         }
     };
 
+    const handleRefresh = () => {
+        setGroupName('');
+        setBudget('');
+        setSelectedUser('');
+        setGroupUsers([]);
+        setError('');
+    };
+
     return (
-        <div className="container">
-            <h1>Group Management</h1>
-
-            {/* Two option cards: Create Group and List Existing Groups */}
-            <div className="card-container">
-                {/* Create Group Card */}
-                <div className="card">
-                    <i className="fas fa-users fa-3x card-icon"></i>
-                    <h2>Create Group</h2>
-                    <button>Create Group</button>
-                </div>
-
-                {/* List Existing Groups Card */}
-                <div className="card">
-                    <i className="fas fa-list fa-3x card-icon"></i>
-                    <h2>List Existing Groups</h2>
-                    <button>View Groups</button>
-                </div>
-
-                {/* View Users Card */}
-                <div className="card">
-                    <i className="fas fa-users fa-3x card-icon"></i>
-                    <h2>View Users</h2>
-                    <button onClick={fetchUsers}>See Users</button> {/* Button to fetch users */}
-                </div>
-            </div>
-
-            {/* Displaying error if any */}
+        <div className="card"> {/* Card container */}
+            <h2>Create Group</h2>
             {error && <p className="error">{error}</p>}
+            <input
+                type="text"
+                className="group-name-input" // Updated input with class name
+                placeholder="Group Name"
+                value={groupName}
+                onChange={(e) => setGroupName(e.target.value)}
+            />
+            <input
+                type="number"
+                placeholder="Budget"
+                value={budget}
+                onChange={(e) => setBudget(e.target.value)}
+            />
 
-            {/* Displaying the list of users if showUsers is true */}
-            {showUsers && (
-                <div className="user-list-container">
-                    <ul className="user-list">
-                        {users.map(user => (
-                            <li key={user.id}>
-                                <span>{user.name} {user.lastName}</span>
-                                {/* Optional button can be added here if needed */}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
+            {/* User dropdown for adding users to the group */}
+            <select
+                value={selectedUser}
+                onChange={(e) => setSelectedUser(e.target.value)}
+            >
+                <option value="">Select a user</option>
+                {users.map(user => (
+                    <option key={user.id} value={user.id}>
+                        {user.name} {user.lastName}
+                    </option>
+                ))}
+            </select>
+            <button onClick={handleAddUser}>Add User</button>
+
+            {/* Display selected users */}
+            <ul>
+                {groupUsers.map(userId => {
+                    const user = users.find(u => u.id === userId); // Find user by ID
+                    return (
+                        <li key={userId}>
+                            {user ? `${user.name} ${user.lastName}` : 'Unknown User'}
+                        </li>
+                    );
+                })}
+            </ul>
+
+            <button onClick={handleCreateGroup}>Create Group</button>
+            <button onClick={handleRefresh}>Refresh</button> {/* Refresh button */}
         </div>
     );
 }
 
-export default Page2;
+export default CreateGroupForm;

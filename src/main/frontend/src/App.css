@@ -342,3 +342,58 @@ button:hover {
     margin-top: 5px;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.1em;
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.card {
+    background-color: #fff; /* Card background color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    padding: 20px; /* Inner padding */
+    max-width: 400px; /* Maximum width */
+    margin: 20px auto; /* Center the card horizontally */
+}
+
+.group-name-input {
+    width: 100%; /* Full width inside the card */
+    padding: 10px; /* Add some padding */
+    margin: 10px 0; /* Vertical margin */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.group-name-input:focus {
+    border-color: #4CAF50; /* Change border color on focus */
+    outline: none; /* Remove outline */
+}
+
+button {
+    margin: 5px 0; /* Vertical margin for buttons */
+    padding: 10px; /* Padding for buttons */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners for buttons */
+    background-color: #4CAF50; /* Button background color */
+    color: white; /* Button text color */
+    cursor: pointer; /* Pointer on hover */
+}
+
+button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
