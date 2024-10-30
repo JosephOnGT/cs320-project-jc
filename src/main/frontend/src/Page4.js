@@ -1,71 +1,73 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';  // Assuming consistent styling is applied here
+import './App.css';
 
 function Page4() {
-    const [users, setUsers] = useState([]);  // State to hold the user data
-    const [groups, setGroups] = useState([]);  // State to hold the groups data
-    const [error, setError] = useState('');  // State to handle any errors
-    const [showUsers, setShowUsers] = useState(false);  // State to toggle user display
-    const [showGroups, setShowGroups] = useState(false);  // State to toggle group display
-    const [loading, setLoading] = useState(false);  // State for loading indicator
+    const [users, setUsers] = useState([]);
+    const [groups, setGroups] = useState([]);
+    const [error, setError] = useState('');
+    const [showUsers, setShowUsers] = useState(false);
+    const [showGroups, setShowGroups] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     // Function to fetch users from the backend
     const fetchUsers = async () => {
-        setLoading(true);  // Start loading
+        setLoading(true);
         try {
             const response = await fetch('http://localhost:8080/users');
             if (!response.ok) {
                 throw new Error('Failed to fetch users');
             }
             const data = await response.json();
-            setUsers(data);  // Set the fetched user data
-            setError('');  // Clear any previous errors
-            setShowUsers(true);  // Set state to show users
-            setShowGroups(false);  // Hide groups when fetching users
+            setUsers(data);
+            setError('');
+            setShowUsers(true);
+            setShowGroups(false);
         } catch (error) {
             console.error('Error fetching users:', error);
             setError('Error fetching users. Please try again later.');
-            setShowUsers(false);  // Hide users if there’s an error
+            setShowUsers(false);
         } finally {
-            setLoading(false);  // Stop loading
+            setLoading(false);
         }
     };
 
     // Function to fetch groups from the backend
     const fetchGroups = async () => {
-        setLoading(true);  // Start loading
+        setLoading(true);
         try {
             const response = await fetch('http://localhost:8080/groups');
             if (!response.ok) {
                 throw new Error('Failed to fetch groups');
             }
             const data = await response.json();
-            setGroups(data);  // Set the fetched group data
-            setError('');  // Clear any previous errors
-            setShowGroups(true);  // Set state to show groups
-            setShowUsers(false);  // Hide users when fetching groups
+            setGroups(data);
+            setError('');
+            setShowGroups(true);
+            setShowUsers(false);
         } catch (error) {
             console.error('Error fetching groups:', error);
             setError('Error fetching groups. Please try again later.');
-            setShowGroups(false);  // Hide groups if there’s an error
+            setShowGroups(false);
         } finally {
-            setLoading(false);  // Stop loading
+            setLoading(false);
         }
     };
 
     // Function to handle refreshing the user list and error message
-    const handleRefresh = () => {
+    const handleRefresh = async () => {
+        setLoading(true);  // Start loading
         setUsers([]);  // Clear the users list
         setGroups([]);  // Clear the groups list
         setError('');  // Clear any displayed error
         setShowUsers(false);  // Hide users
         setShowGroups(false);  // Hide groups
-        fetchUsers();  // Fetch the user list again
+        await fetchUsers();  // Await to ensure users are reloaded
+        setLoading(false);  // Stop loading
     };
 
     // Use effect to fetch users on component mount
     useEffect(() => {
-        fetchUsers();  // Fetch users initially when the component mounts
+        fetchUsers();
     }, []);
 
     return (
@@ -78,14 +80,16 @@ function Page4() {
                 <div className="card">
                     <i className="fas fa-list fa-3x card-icon"></i>
                     <h2>List Existing Groups</h2>
-                    <button onClick={fetchGroups}>View Groups</button> {/* Fetch groups when clicked */}
+                    <button onClick={fetchGroups} aria-label="View Groups">
+                        View Groups
+                    </button>
                 </div>
 
                 {/* View Users Card */}
                 <div className="card">
                     <i className="fas fa-users fa-3x card-icon"></i>
                     <h2>View Users</h2>
-                    <button onClick={fetchUsers} disabled={loading}>
+                    <button onClick={fetchUsers} disabled={loading} aria-label="See Users">
                         {loading ? 'Loading...' : 'See Users'}
                     </button>
                 </div>
@@ -93,7 +97,9 @@ function Page4() {
 
             {/* Refresh Button */}
             <div className="refresh-button-container">
-                <button onClick={handleRefresh} className="refresh-button">Refresh</button>
+                <button onClick={handleRefresh} className="refresh-button" aria-label="Refresh">
+                    {loading ? 'Refreshing...' : 'Refresh'}
+                </button>
             </div>
 
             {/* Displaying error if any */}
