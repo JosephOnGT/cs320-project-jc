@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';  // Assuming your common styles are in App.css
+import './App.css';
+import { API_URL } from './config';
 
 function Page3() {
     const [wishlistItems, setWishlistItems] = useState([]);
@@ -8,15 +9,13 @@ function Page3() {
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
-    // Fetch existing wishlist items when the component mounts
     useEffect(() => {
         fetchWishlists();
     }, []);
 
-    // Function to fetch wishlist items from the backend
     const fetchWishlists = async () => {
         try {
-            const response = await fetch('http://localhost:8080/wishlists');
+            const response = await fetch(`${API_URL}/wishlists`);
             if (!response.ok) {
                 throw new Error('Failed to fetch wishlists');
             }
@@ -27,7 +26,6 @@ function Page3() {
         }
     };
 
-    // Function to add item to wishlist
     const addItem = async () => {
         if (!newItemName) {
             setError('Item name cannot be empty.');
@@ -36,7 +34,7 @@ function Page3() {
 
         const newItem = { itemName: newItemName, description: newItemDescription };
         try {
-            const response = await fetch('http://localhost:8080/wishlists', {
+            const response = await fetch(`${API_URL}/wishlists`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(newItem),
@@ -47,18 +45,17 @@ function Page3() {
             }
 
             setSuccessMessage('Item added successfully!');
-            fetchWishlists(); // Refresh the list after adding
-            setNewItemName(''); // Clear the input fields
+            fetchWishlists();
+            setNewItemName('');
             setNewItemDescription('');
         } catch (err) {
             setError('Failed to add item to wishlist.');
         }
     };
 
-    // Function to remove item from wishlist
     const removeItem = async (id) => {
         try {
-            const response = await fetch(`http://localhost:8080/wishlists/${id}`, {
+            const response = await fetch(`${API_URL}/wishlists/${id}`, {
                 method: 'DELETE',
             });
 
@@ -67,7 +64,7 @@ function Page3() {
             }
 
             setSuccessMessage('Item removed successfully!');
-            fetchWishlists(); // Refresh the list after removing
+            fetchWishlists();
         } catch (err) {
             setError('Failed to remove item from wishlist.');
         }
@@ -77,10 +74,8 @@ function Page3() {
         <div className="container">
             <h1>Your Wishlist</h1>
 
-            {/* Add an image above the wishlist */}
             <img src="/wishlist-image.jpg" alt="Wishlist" className="wishlist-image" />
 
-            {/* Input to add new item */}
             <div className="form-group">
                 <input
                     type="text"
@@ -97,11 +92,9 @@ function Page3() {
                 <button onClick={addItem}>Add Item</button>
             </div>
 
-            {/* Show error and success messages */}
             {error && <p className="error">{error}</p>}
             {successMessage && <p className="success">{successMessage}</p>}
 
-            {/* Display wishlist items */}
             <div className="wishlist">
                 {wishlistItems.length === 0 ? (
                     <p>Your wishlist is empty.</p>

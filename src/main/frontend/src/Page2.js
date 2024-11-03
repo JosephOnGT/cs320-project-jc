@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import { API_URL } from './config';
 
 function CreateGroupForm() {
     const [groupName, setGroupName] = useState('');
     const [budget, setBudget] = useState('');
-    const [selectedUser, setSelectedUser] = useState('');  // Single selected user
-    const [groupUsers, setGroupUsers] = useState([]);  // List of users in the group
+    const [selectedUser, setSelectedUser] = useState('');
+    const [groupUsers, setGroupUsers] = useState([]);
     const [users, setUsers] = useState([]);
     const [error, setError] = useState('');
 
-    // Fetch users for the dropdown
     useEffect(() => {
         async function fetchUsers() {
             try {
-                const response = await fetch('http://localhost:8080/users');
+                const response = await fetch(`${API_URL}/users`);
                 const data = await response.json();
                 setUsers(data);
             } catch (error) {
@@ -24,11 +24,10 @@ function CreateGroupForm() {
     }, []);
 
     const handleAddUser = () => {
-        // Check if the user is already in the group
         if (groupUsers.includes(selectedUser) || selectedUser === '') return;
 
         setGroupUsers([...groupUsers, selectedUser]);
-        setSelectedUser('');  // Reset the selected user
+        setSelectedUser('');
     };
 
     const handleCreateGroup = async () => {
@@ -38,19 +37,27 @@ function CreateGroupForm() {
         }
         setError('');
 
-        const response = await fetch('http://localhost:8080/groups', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ groupName, budget, userIds: groupUsers }),
-        });
+        try {
+            const response = await fetch(`${API_URL}/groups`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    groupName,
+                    budget: parseFloat(budget),  // Ensure budget is a number
+                    userIds: groupUsers
+                }),
+            });
 
-        if (response.ok) {
-            alert("Group created successfully!");
-            // Optionally reset the form after successful creation
-            handleRefresh();
-        } else {
-            const errorMessage = await response.text();
-            setError(errorMessage);
+            if (response.ok) {
+                alert("Group created successfully!");
+                handleRefresh();
+            } else {
+                const errorMessage = await response.text();
+                setError(errorMessage);
+            }
+        } catch (error) {
+            console.error('Error creating group:', error);
+            setError("An error occurred while creating the group.");
         }
     };
 
@@ -63,12 +70,12 @@ function CreateGroupForm() {
     };
 
     return (
-        <div className="card"> {/* Card container */}
+        <div className="card">
             <h2>Create Group</h2>
             {error && <p className="error">{error}</p>}
             <input
                 type="text"
-                className="group-name-input" // Updated input with class name
+                className="group-name-input"
                 placeholder="Group Name"
                 value={groupName}
                 onChange={(e) => setGroupName(e.target.value)}
@@ -80,7 +87,6 @@ function CreateGroupForm() {
                 onChange={(e) => setBudget(e.target.value)}
             />
 
-            {/* User dropdown for adding users to the group */}
             <select
                 value={selectedUser}
                 onChange={(e) => setSelectedUser(e.target.value)}
@@ -94,10 +100,9 @@ function CreateGroupForm() {
             </select>
             <button onClick={handleAddUser}>Add User</button>
 
-            {/* Display selected users */}
             <ul>
                 {groupUsers.map(userId => {
-                    const user = users.find(u => u.id === userId); // Find user by ID
+                    const user = users.find(u => u.id === userId);
                     return (
                         <li key={userId}>
                             {user ? `${user.name} ${user.lastName}` : 'Unknown User'}
@@ -107,7 +112,7 @@ function CreateGroupForm() {
             </ul>
 
             <button onClick={handleCreateGroup}>Create Group</button>
-            <button onClick={handleRefresh}>Refresh</button> {/* Refresh button */}
+            <button onClick={handleRefresh}>Refresh</button>
         </div>
     );
 }

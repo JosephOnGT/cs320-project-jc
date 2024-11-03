@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import { API_URL } from './config';
 
 function Page4() {
     const [users, setUsers] = useState([]);
@@ -13,7 +14,7 @@ function Page4() {
     const fetchUsers = async () => {
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:8080/users');
+            const response = await fetch(`${API_URL}/users`);
             if (!response.ok) {
                 throw new Error('Failed to fetch users');
             }
@@ -35,7 +36,7 @@ function Page4() {
     const fetchGroups = async () => {
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:8080/groups');
+            const response = await fetch(`${API_URL}/groups`);
             if (!response.ok) {
                 throw new Error('Failed to fetch groups');
             }
@@ -55,14 +56,14 @@ function Page4() {
 
     // Function to handle refreshing the user list and error message
     const handleRefresh = async () => {
-        setLoading(true);  // Start loading
-        setUsers([]);  // Clear the users list
-        setGroups([]);  // Clear the groups list
-        setError('');  // Clear any displayed error
-        setShowUsers(false);  // Hide users
-        setShowGroups(false);  // Hide groups
-        await fetchUsers();  // Await to ensure users are reloaded
-        setLoading(false);  // Stop loading
+        setLoading(true);
+        setUsers([]);
+        setGroups([]);
+        setError('');
+        setShowUsers(false);
+        setShowGroups(false);
+        await fetchUsers();
+        setLoading(false);
     };
 
     // Use effect to fetch users on component mount
@@ -74,9 +75,7 @@ function Page4() {
         <div className="container">
             <h1>Group Management</h1>
 
-            {/* Card container for listing existing groups and viewing users */}
             <div className="card-container">
-                {/* List Existing Groups Card */}
                 <div className="card">
                     <i className="fas fa-list fa-3x card-icon"></i>
                     <h2>List Existing Groups</h2>
@@ -85,7 +84,6 @@ function Page4() {
                     </button>
                 </div>
 
-                {/* View Users Card */}
                 <div className="card">
                     <i className="fas fa-users fa-3x card-icon"></i>
                     <h2>View Users</h2>
@@ -95,17 +93,14 @@ function Page4() {
                 </div>
             </div>
 
-            {/* Refresh Button */}
             <div className="refresh-button-container">
                 <button onClick={handleRefresh} className="refresh-button" aria-label="Refresh">
                     {loading ? 'Refreshing...' : 'Refresh'}
                 </button>
             </div>
 
-            {/* Displaying error if any */}
             {error && <p className="error">{error}</p>}
 
-            {/* Displaying the list of users if showUsers is true */}
             {showUsers && (
                 <div className="user-list-container">
                     <ul className="user-list">
@@ -118,7 +113,6 @@ function Page4() {
                 </div>
             )}
 
-            {/* Displaying the list of groups if showGroups is true */}
             {showGroups && (
                 <div className="group-list-container">
                     <h2>Existing Groups</h2>
